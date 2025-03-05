@@ -1,0 +1,67 @@
+services:
+
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: [ 'controller.service_arguments' ]
+    # Command services
+    App\Command\CreateUserCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@security.user_password_encoder.generic'
+        tags: [ 'console.command' ]
+
+    App\Command\AssignRoleCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags: [ 'console.command' ]
+
+    app.admin.product:
+        class: App\Admin\ProductAdmin
+        arguments: [~, App\Entity\Product, App\Controller\Admin\ProductAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Product' }
+        calls:
+            - [setTranslationDomain, [App]]
+    
+    app.admin.category:
+        class: App\Admin\CategoryAdmin
+        arguments: [~, App\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Category' }
+        calls:
+            - [setTranslationDomain, [App]]
+    
+    app.product.event_listener:
+        class: App\EventListener\ProductAdminListener
+        arguments: ['@service_container']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+
+    app.admin.user:
+        class: App\Admin\UserAdmin
+        arguments:
+            - ~
+            - App\Entity\User
+            - ~
+            - '@security.user_password_encoder.generic'
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Users', label: 'User' }
+        calls:
+            - [ setTranslationDomain, [ App ] ]
+
+        app.admin.impersonation_log:
+            class: App\Admin\ImpersonationLogAdmin
+            arguments:
+                - ~
+                - App\Entity\ImpersonationLog
+                - ~
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: 'Security', label: 'Impersonation Logs' }
+            calls:
+                - [ setTranslationDomain, [ App ] ]

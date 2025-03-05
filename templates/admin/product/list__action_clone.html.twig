@@ -1,0 +1,5 @@
+{% if admin.hasAccess('clone', object) %}
+    <a href="{{ admin.generateObjectUrl('clone', object) }}" class="btn btn-sm btn-default" title="Clone">
+        <i class="fa fa-copy"></i> Clone
+    </a>
+{% endif %}

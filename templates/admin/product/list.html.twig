@@ -1,0 +1,9 @@
+{# templates/admin/product/list.html.twig #}
+{% extends '@SonataAdmin/CRUD/base_list.html.twig' %}
+
+{% block list_table %}
+    {{ parent() }}
+    <div class="sonata-ba-list-custom-footer">
+        <p>Custom footer with additional information</p>
+    </div>
+{% endblock %}

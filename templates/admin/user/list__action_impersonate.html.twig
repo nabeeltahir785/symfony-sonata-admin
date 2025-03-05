@@ -1,0 +1,5 @@
+{% if admin.isGranted('ROLE_ALLOWED_TO_SWITCH') and object.id != app.user.id %}
+    <a href="{{ path('admin_impersonate_user', {'id': object.id}) }}" class="btn btn-sm btn-default" title="Impersonate" onclick="return confirm('Are you sure you want to impersonate this user?')">
+        <i class="fa fa-user-secret"></i> Impersonate
+    </a>
+{% endif %}

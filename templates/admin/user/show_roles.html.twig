@@ -1,0 +1,21 @@
+{% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %}
+
+{% block field %}
+    <ul class="list-unstyled">
+        {% for role in value %}
+            <li>
+                {% set badge_class = '' %}
+                {% if role == 'ROLE_SUPER_ADMIN' %}
+                    {% set badge_class = 'bg-red' %}
+                {% elseif role == 'ROLE_ADMIN' %}
+                    {% set badge_class = 'bg-blue' %}
+                {% elseif role == 'ROLE_PRODUCT_ADMIN' or role == 'ROLE_CUSTOMER_ADMIN' or role == 'ROLE_ORDER_ADMIN' or role == 'ROLE_CONTENT_ADMIN' %}
+                    {% set badge_class = 'bg-green' %}
+                {% else %}
+                    {% set badge_class = 'bg-gray' %}
+                {% endif %}
+                <span class="label {{ badge_class }}">{{ role|replace({'ROLE_': ''}) }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .impersonating-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1100;
+        }
+
+        .impersonating-bar .alert {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        body.impersonating {
+            padding-top: 50px;
+        }
+
+        body.impersonating .navbar-static-top {
+            top: 50px;
+        }
+
+        body.impersonating .main-header {
+            margin-top: 50px;
+        }
+
+        body.impersonating .wrapper {
+            margin-top: 50px;
+        }
+
+        .label.bg-red {
+            background-color: #dd4b39 !important;
+        }
+
+        .label.bg-blue {
+            background-color: #0073b7 !important;
+        }
+
+        .label.bg-green {
+            background-color: #00a65a !important;
+        }
+
+        .label.bg-gray {
+            background-color: #777 !important;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.querySelector('.impersonating-bar')) {
+                document.body.classList.add('impersonating');
+            }
+        });
+    </script>
+{% endblock %}

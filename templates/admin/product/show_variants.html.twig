@@ -1,0 +1,26 @@
+{% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %}
+
+{% block field %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for variant in value %}
+            <tr>
+                <td>{{ variant.name }}</td>
+                <td>{{ variant.sku }}</td>
+                <td>{{ variant.price|number_format(2, '.', ',') }} USD</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No variants available</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

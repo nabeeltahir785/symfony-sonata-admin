@@ -1,0 +1,5 @@
+{% if admin.hasAccess('generateVariants', object) %}
+    <a href="{{ admin.generateObjectUrl('generateVariants', object) }}" class="btn btn-sm btn-default" title="Generate Variants">
+        <i class="fa fa-sitemap"></i> Generate Variants
+    </a>
+{% endif %}

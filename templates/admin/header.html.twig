@@ -1,0 +1,20 @@
+{% block sonata_header %}
+    {{ parent() }}
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <div class="impersonating-bar">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="alert alert-warning">
+                            <strong>Impersonation Mode Active</strong>: You are currently viewing the site as
+                            <strong>{{ app.user.fullName }}</strong> ({{ app.user.email }})
+                            <a href="{{ path('admin_impersonate_exit') }}" class="btn btn-xs btn-danger pull-right">
+                                <i class="fa fa-times"></i> Exit Impersonation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

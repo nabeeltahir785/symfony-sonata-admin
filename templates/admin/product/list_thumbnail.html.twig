@@ -1,0 +1,9 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object.images.first %}
+        <img src="{{ asset(object.images.first.path) }}" alt="{{ object.name }}" class="img-thumbnail" width="80">
+    {% else %}
+        <span class="label label-danger">No image</span>
+    {% endif %}
+{% endblock %}
