@@ -2,6 +2,11 @@
 
 namespace App\Controller\Product;
 
+use Sonata\AdminBundle\Controller\CRUDController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Entity\ProductVariant;
+
 class ProductAdminController extends CRUDController
 {
     public function cloneAction()

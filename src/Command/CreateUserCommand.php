@@ -33,7 +33,7 @@ class CreateUserCommand extends Command
             ->addOption('admin', null, InputOption::VALUE_NONE, 'Create an admin user with ROLE_SUPER_ADMIN');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Create User');

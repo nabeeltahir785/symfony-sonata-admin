@@ -10,6 +10,12 @@ security:
                 class: App\Entity\User
                 property: email
 
+        # Either add the missing provider definition here:
+        app_admin_provider:
+            entity:
+                class: App\Entity\Admin  # Adjust this to your actual Admin entity
+                property: email  # Adjust this to your admin's username property
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -23,7 +29,7 @@ security:
                 check_path: admin_login
                 default_target_path: sonata_admin_dashboard
                 username_parameter: _email
-                csrf_token_generator: security.csrf.token_manager
+                enable_csrf: true
             logout:
                 path: admin_logout
                 target: admin_login
@@ -34,26 +40,26 @@ security:
                 role: ROLE_ALLOWED_TO_SWITCH
                 parameter: _switch_user
 
-        role_hierarchy:
-            ROLE_ADMIN: [ ROLE_USER ]
-            ROLE_PRODUCT_ADMIN: [ ROLE_ADMIN ]
-            ROLE_CUSTOMER_ADMIN: [ ROLE_ADMIN ]
-            ROLE_ORDER_ADMIN: [ ROLE_ADMIN ]
-            ROLE_CONTENT_ADMIN: [ ROLE_ADMIN ]
-            ROLE_SUPER_ADMIN: [
-                ROLE_ADMIN,
-                ROLE_PRODUCT_ADMIN,
-                ROLE_CUSTOMER_ADMIN,
-                ROLE_ORDER_ADMIN,
-                ROLE_CONTENT_ADMIN,
-                ROLE_ALLOWED_TO_SWITCH
-            ]
-
         main:
             lazy: true
-            provider: app_admin_provider  # Changed from users_in_memory
+            provider: app_admin_provider  # Make sure this matches a defined provider
             # Other main firewall settings
 
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_USER ]
+        ROLE_PRODUCT_ADMIN: [ ROLE_ADMIN ]
+        ROLE_CUSTOMER_ADMIN: [ ROLE_ADMIN ]
+        ROLE_ORDER_ADMIN: [ ROLE_ADMIN ]
+        ROLE_CONTENT_ADMIN: [ ROLE_ADMIN ]
+        ROLE_SUPER_ADMIN: [
+            ROLE_ADMIN,
+            ROLE_PRODUCT_ADMIN,
+            ROLE_CUSTOMER_ADMIN,
+            ROLE_ORDER_ADMIN,
+            ROLE_CONTENT_ADMIN,
+            ROLE_ALLOWED_TO_SWITCH
+        ]
+
     access_control:
-        - { path: ^/admin/login$, role: PUBLIC_ACCESS }  # Updated from IS_AUTHENTICATED_ANONYMOUSLY
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
         - { path: ^/admin/, role: ROLE_ADMIN }

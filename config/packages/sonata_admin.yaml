@@ -9,7 +9,6 @@ sonata_admin:
     pager_links: 5
   templates:
     layout: 'admin/layout.html.twig'
-    header: 'admin/header.html.twig'
   dashboard:
     blocks:
       -
@@ -44,54 +43,3 @@ sonata_admin:
         label_catalogue: SonataAdminBundle
         icon: '<i class="fa fa-file-text"></i>'
         items: []
-
-# config/packages/sonata_doctrine_orm_admin.yaml
-sonata_doctrine_orm_admin:
-  templates:
-    form: [ "@SonataDoctrineORMAdmin/Form/form_admin_fields.html.twig" ]
-    filter: [ "@SonataDoctrineORMAdmin/Form/filter_admin_fields.html.twig" ]
-    types:
-      list:
-        array: "@SonataAdmin/CRUD/list_array.html.twig"
-        boolean: "@SonataAdmin/CRUD/list_boolean.html.twig"
-        date: "@SonataAdmin/CRUD/list_date.html.twig"
-        time: "@SonataAdmin/CRUD/list_time.html.twig"
-        datetime: "@SonataAdmin/CRUD/list_datetime.html.twig"
-        text: "@SonataAdmin/CRUD/list_string.html.twig"
-        trans: "@SonataAdmin/CRUD/list_trans.html.twig"
-        string: "@SonataAdmin/CRUD/list_string.html.twig"
-        smallint: "@SonataAdmin/CRUD/list_string.html.twig"
-        bigint: "@SonataAdmin/CRUD/list_string.html.twig"
-        integer: "@SonataAdmin/CRUD/list_string.html.twig"
-        decimal: "@SonataAdmin/CRUD/list_string.html.twig"
-        identifier: "@SonataAdmin/CRUD/list_string.html.twig"
-        currency: "@SonataAdmin/CRUD/list_currency.html.twig"
-        percent: "@SonataAdmin/CRUD/list_percent.html.twig"
-        choice: "@SonataAdmin/CRUD/list_choice.html.twig"
-        url: "@SonataAdmin/CRUD/list_url.html.twig"
-        html: "@SonataAdmin/CRUD/list_html.html.twig"
-        email: "@SonataAdmin/CRUD/list_email.html.twig"
-      show:
-        array: "@SonataAdmin/CRUD/show_array.html.twig"
-        boolean: "@SonataAdmin/CRUD/show_boolean.html.twig"
-        date: "@SonataAdmin/CRUD/show_date.html.twig"
-        time: "@SonataAdmin/CRUD/show_time.html.twig"
-        datetime: "@SonataAdmin/CRUD/show_datetime.html.twig"
-        text: "@SonataAdmin/CRUD/show_text.html.twig"
-        trans: "@SonataAdmin/CRUD/show_trans.html.twig"
-        string: "@SonataAdmin/CRUD/show_string.html.twig"
-        smallint: "@SonataAdmin/CRUD/show_string.html.twig"
-        bigint: "@SonataAdmin/CRUD/show_string.html.twig"
-        integer: "@SonataAdmin/CRUD/show_string.html.twig"
-        decimal: "@SonataAdmin/CRUD/show_string.html.twig"
-        currency: "@SonataAdmin/CRUD/show_currency.html.twig"
-        percent: "@SonataAdmin/CRUD/show_percent.html.twig"
-        choice: "@SonataAdmin/CRUD/show_choice.html.twig"
-        url: "@SonataAdmin/CRUD/show_url.html.twig"
-        html: "@SonataAdmin/CRUD/show_html.html.twig"
-        email: "@SonataAdmin/CRUD/show_email.html.twig"
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]

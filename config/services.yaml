@@ -12,7 +12,7 @@ services:
     App\Command\CreateUserCommand:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@security.user_password_encoder.generic'
+            - '@security.password_hasher_factory'
         tags: [ 'console.command' ]
 
     App\Command\AssignRoleCommand:
@@ -21,15 +21,15 @@ services:
         tags: [ 'console.command' ]
 
     app.admin.product:
-        class: App\Admin\ProductAdmin
-        arguments: [~, App\Entity\Product, App\Controller\Admin\ProductAdminController]
+        class: App\Admin\Product\ProductAdmin
+        arguments: [~, App\Entity\Product, App\Controller\Product\ProductAdminController]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Product' }
         calls:
             - [setTranslationDomain, [App]]
     
     app.admin.category:
-        class: App\Admin\CategoryAdmin
+        class: App\Admin\Category\CategoryAdmin
         arguments: [~, App\Entity\Category, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Category' }
@@ -49,19 +49,19 @@ services:
             - ~
             - App\Entity\User
             - ~
-            - '@security.user_password_encoder.generic'
+            - '@security.password_hasher_factory'  # Use this instead of password_hasher_factory
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Users', label: 'User' }
         calls:
             - [ setTranslationDomain, [ App ] ]
 
-        app.admin.impersonation_log:
-            class: App\Admin\ImpersonationLogAdmin
-            arguments:
-                - ~
-                - App\Entity\ImpersonationLog
-                - ~
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: 'Security', label: 'Impersonation Logs' }
-            calls:
-                - [ setTranslationDomain, [ App ] ]
+    app.admin.impersonation_log:
+        class: App\Admin\ImpersonationLog\ImpersonationLogAdmin
+        arguments:
+            - ~
+            - App\Entity\ImpersonationLog
+            - ~
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Security', label: 'Impersonation Logs' }
+        calls:
+            - [ setTranslationDomain, [ App ] ]

@@ -40,7 +40,7 @@ class AssignRoleCommand extends Command
             ->setDescription('Assigns a role to a user');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Assign Role to User');
