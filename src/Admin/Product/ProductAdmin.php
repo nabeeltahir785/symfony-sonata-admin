@@ -13,6 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Sonata\AdminBundle\Admin\TemplateRegistryInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Sonata\AdminBundle\Form\Type\ModelType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProductAdmin extends AbstractAdmin
 {
@@ -33,11 +38,14 @@ class ProductAdmin extends AbstractAdmin
             ->add('description', TextareaType::class, [
                 'attr' => ['rows' => 5]
             ])
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'Draft' => 0,
-                    'Published' => 1,
-                    'Archived' => 2
+            ->add('status', null, [
+                'field_type' => 'choice',
+                'field_options' => [
+                    'choices' => [
+                        'Draft' => 0,
+                        'Published' => 1,
+                        'Archived' => 2,
+                    ],
                 ]
             ])
             ->end()
@@ -90,11 +98,14 @@ class ProductAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('price')
-            ->add('status', 'doctrine_orm_choice', [
-                'choices' => [
-                    'Draft' => 0,
-                    'Published' => 1,
-                    'Archived' => 2
+            ->add('status', null, [
+                'field_type' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                'field_options' => [
+                    'choices' => [
+                        'Draft' => 0,
+                        'Published' => 1,
+                        'Archived' => 2,
+                    ],
                 ]
             ])
             ->add('category');
@@ -112,12 +123,13 @@ class ProductAdmin extends AbstractAdmin
                 'currency' => 'USD'
             ])
             ->add('status', 'choice', [
+                'template' => '@SonataAdmin/CRUD/list_choice.html.twig',
+                'editable' => false,
                 'choices' => [
                     0 => 'Draft',
                     1 => 'Published',
-                    2 => 'Archived'
-                ],
-                'editable' => true
+                    2 => 'Archived',
+                ]
             ])
             ->add('category.name')
             ->add('createdAt', null, [
@@ -146,6 +158,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('description')
             ->add('status', 'choice', [
+                'template' => '@SonataAdmin/CRUD/show_choice.html.twig',
                 'choices' => [
                     0 => 'Draft',
                     1 => 'Published',

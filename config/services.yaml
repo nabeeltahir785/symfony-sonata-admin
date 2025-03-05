@@ -5,29 +5,31 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false
 
+    App\DataFixtures\:
+        resource: '../src/DataFixtures/'
+        tags: [ 'doctrine.fixture.orm' ]
+
+    App\Repository\:
+        resource: '../src/Repository'
+        autowire: true
+        autoconfigure: true
+        tags: [ 'doctrine.repository_service' ]
+
     App\Controller\:
         resource: '../src/Controller/'
         tags: [ 'controller.service_arguments' ]
-    # Command services
-    App\Command\CreateUserCommand:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@security.password_hasher_factory'
-        tags: [ 'console.command' ]
-
-    App\Command\AssignRoleCommand:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-        tags: [ 'console.command' ]
 
     app.admin.product:
         class: App\Admin\Product\ProductAdmin
-        arguments: [~, App\Entity\Product, App\Controller\Product\ProductAdminController]
+        arguments:
+            - ~
+            - App\Entity\Product
+            - ~
         tags:
-            - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Product' }
+            - { name: sonata.admin, manager_type: orm, group: "Products", label: "Product" }
         calls:
-            - [setTranslationDomain, [App]]
-    
+            - [ setTranslationDomain, [ App ] ]
+
     app.admin.category:
         class: App\Admin\Category\CategoryAdmin
         arguments: [~, App\Entity\Category, ~]
@@ -35,7 +37,7 @@ services:
             - { name: sonata.admin, manager_type: orm, group: 'Products', label: 'Category' }
         calls:
             - [setTranslationDomain, [App]]
-    
+
     app.product.event_listener:
         class: App\EventListener\ProductAdminListener
         arguments: ['@service_container']
@@ -49,7 +51,7 @@ services:
             - ~
             - App\Entity\User
             - ~
-            - '@security.password_hasher_factory'  # Use this instead of password_hasher_factory
+            - '@security.password_hasher_factory'
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Users', label: 'User' }
         calls:

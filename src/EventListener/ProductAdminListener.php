@@ -1,8 +1,10 @@
 <?php
 
+namespace App\EventListener;
 
 use App\Entity\Product;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ProductAdminListener
@@ -14,9 +16,9 @@ class ProductAdminListener
         $this->container = $container;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(PrePersistEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if (!$entity instanceof Product) {
             return;
@@ -26,9 +28,9 @@ class ProductAdminListener
         // For example: generate a unique SKU, process images, etc.
     }
 
-    public function postUpdate(LifecycleEventArgs $args)
+    public function postUpdate(PostUpdateEventArgs $args)
     {
-        $entity = $args->getEntity();
+        $entity = $args->getObject();
 
         if (!$entity instanceof Product) {
             return;

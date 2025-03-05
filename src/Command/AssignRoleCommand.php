@@ -37,6 +37,7 @@ class AssignRoleCommand extends Command
     protected function configure()
     {
         $this
+            ->setName('app:assign-role')
             ->setDescription('Assigns a role to a user');
     }
 
